@@ -171,4 +171,8 @@ If you are using cloud-local within a virtual machine running you your local box
 
 ## Vagrant
 
-Requires Ansible version >= 2.2
+Requires Ansible version >= 2.2 and Vagrant version >= 1.9
+
+In the root directory, do `vagrant up`. This will set up the vagrant box and provision it.
+
+Then `vagrant ssh`, and follow the above steps for setting up the cloud-local instance.
