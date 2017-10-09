@@ -1,6 +1,6 @@
 # cloud-local
 
-Cloud-local is a collection of bash scripts to set up a single-node cloud on on your desktop, laptop, or NUC. Performance expectations are to be sufficient for testing things like map-reduce ingest, converters in real life with real files, and your own geoserver/iterator stack. This setup is preconfigured to run YARN so you can submit command line tools mapreduce jobs to it. Currently localhost ssh is NOT required so it will work on a NUC. 
+Cloud-local is a collection of bash scripts to set up a single-node cloud on on your desktop, laptop, or NUC. Performance expectations are to be sufficient for testing things like map-reduce ingest, converters in real life with real files, and your own geoserver/iterator stack. This setup is preconfigured to run YARN so you can submit command line tools mapreduce jobs to it. Currently localhost ssh is NOT required so it will work on a NUC.
 
 Cloud Local can be used to run single node versions of the following software:
 * Hadoop HDFS
@@ -15,7 +15,7 @@ Cloud Local can be used to run single node versions of the following software:
 
 A proxy server can be configured by using the standard `http_proxy` env var or the cloud-local specific `cl_http_proxy` env var. The cloud local specific variable takes precedence.
 
-## Getting Started 
+## Getting Started
 
 To prepare for the first run of cloud-local, you may need to `unset` environment variables `HADOOP_HOME`, `ACCUMULO_HOME`, `ZOOKEEPER_HOME`, `HBASE_HOME`, and others. If `env |grep -i hadoop` comes back empty, you should be good to go. You should also `kill` any instances of zookeeper or hadoop running locally. Find them with `jps -lV`.
 
@@ -45,13 +45,13 @@ After running `init` source the variables in your bashrc or other shell:
     source bin/config.sh
 
 Now you should have the environment vars set:
-    
+
     env | grep -i hadoop
 
 Now you can run fun commands like:
 
     hadoop fs -ls /
-    accumulo shell -u root 
+    accumulo shell -u root
 
 After installing it you should be able to reach your standard cloud urls:
 
@@ -70,7 +70,7 @@ You can also set `CL_VERBOSE=1` env variable in `conf/cloud-local.conf` to incre
 
 ## Stopping and Starting
 
-You can safely stop the cloud using: 
+You can safely stop the cloud using:
 
     bin/cloud-local.sh stop
 
@@ -87,16 +87,16 @@ If existing ports are bound to the ports needed for cloud-local an error message
 cloud-local allows you to modify the ports, hostname, and bind addresses in configuration or using variables in your env (bashrc). For example:
 
     # sample .bashrc configuration
-    
+
     # offset all ports by 10000
     export CL_PORT_OFFSET=10000
-    
+
     # change the bind address
     export CL_BIND_ADDRESS=192.168.2.2
-    
+
     # change the hostname from localhost to something else
     export CL_HOSTNAME=mydns.mycompany.com
-    
+
 Port offseting moves the entire port space by a given numerical amount in order to allow multiple cloud-local instances to run on a single machine (usually by different users). The bind address and hostname args allow you to reference cloud local from other machines.
 
 WARNING - you should stop and clean cloud-local before changing any of these parameters since they will modify the config and may prevent cloud-local from cleanly shutting down. Changing port offsets is supported by XML comments in the accumulo and hadoop config files. Removing or changing these comments (CL_port_default) will likely cause failures.
@@ -110,11 +110,11 @@ If you have the environment variable GEOSERVER_HOME set you can use this paramet
 Similarly, you can instruct cloud-local to shutdown GeoServer with the cloud using:
 
     bin/cloud-local.sh stop -gs
-    
+
 Additionally, if you need to restart GeoServer you may use the command `regeoserver`:
 
     bin/cloud-local.sh regeoserver
-    
+
 The GeoServer PID is stored in `$CLOUD_HOME/data/geoserver/pid/geoserver.pid` and GeoServer's stdout is redirected to `$CLOUD_HOME/data/geoserver/log/std.out`.
 
 ## Zeppelin
@@ -146,7 +146,7 @@ The `cloud-local.sh` script provides options for maintenance. Best to stop the c
 
 ### Updating
 
-When this git repo is updated, follow the steps below. The steps below will remove your data. 
+When this git repo is updated, follow the steps below. The steps below will remove your data.
 
     cd $CLOUD_HOME
     bin/cloud-local.sh stop
@@ -156,7 +156,7 @@ When this git repo is updated, follow the steps below. The steps below will remo
 
 ### Starting over
 
-If you foobar your cloud, you can just delete everything and start over. You should do this once a week or so just for good measure.  
+If you foobar your cloud, you can just delete everything and start over. You should do this once a week or so just for good measure.
 
     cd $CLOUD_HOME
     bin/cloud-local.sh stop  #if cloud is running
@@ -168,3 +168,7 @@ If you foobar your cloud, you can just delete everything and start over. You sho
 ## Virtual Machine Help
 
 If you are using cloud-local within a virtual machine running you your local box you may want to set up port forwarding for port 50095 to see the accumulo monitor. For VirtualBox go to VM's Settings->Network->Port Forwarding section (name=accumulo, protocol=TCP, Host IP=127.0.0.1, Guest IP (leave blank), Guest Port=50095)
+
+## Vagrant
+
+Requires Ansible version >= 2.2
